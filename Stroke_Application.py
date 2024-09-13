@@ -797,25 +797,30 @@ def main():
                         mean_metrics = {key: np.mean(val) for key, val in st.session_state.kf_scores.items()}
                         std_metrics = {key: np.std(val) for key, val in st.session_state.kf_scores.items()}
 
-                        # Organizing metrics into columns for better layout
-                        col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
+                        # Organizing metrics into two rows for better layout
+                        col1, col2, col3, col4, col5 = st.columns(5)
+                        col6, col7, col8, col9 = st.columns(4)
+
+                        # First row of metrics
                         with col1:
                             st.metric(label="Average Accuracy", value=f"{mean_metrics['accuracy']:.4f}", delta=f"{std_metrics['accuracy']:.4f}")
                         with col2:
                             st.metric(label="Average ROC-AUC", value=f"{mean_metrics['roc_auc']:.4f}", delta=f"{std_metrics['roc_auc']:.4f}")
                         with col3:
                             st.metric(label="Average MCC", value=f"{mean_metrics['mcc']:.4f}", delta=f"{std_metrics['mcc']:.4f}")
-                        with col4:    
+                        with col4:
                             st.metric(label="Average Precision (weighted)", value=f"{mean_metrics['weighted_precision']:.4f}", delta=f"{std_metrics['weighted_precision']:.4f}")
-                        with col5:    
+                        with col5:
                             st.metric(label="Average Recall (weighted)", value=f"{mean_metrics['weighted_recall']:.4f}", delta=f"{std_metrics['weighted_recall']:.4f}")
-                        with col6:    
+
+                        # Second row of metrics
+                        with col6:
                             st.metric(label="Average F1-Score (weighted)", value=f"{mean_metrics['weighted_f1']:.4f}", delta=f"{std_metrics['weighted_f1']:.4f}")
                         with col7:
                             st.metric(label="Average Precision (macro)", value=f"{mean_metrics['macro_precision']:.4f}", delta=f"{std_metrics['macro_precision']:.4f}")
-                        with col8:    
+                        with col8:
                             st.metric(label="Average Recall (macro)", value=f"{mean_metrics['macro_recall']:.4f}", delta=f"{std_metrics['macro_recall']:.4f}")
-                        with col9:    
+                        with col9:
                             st.metric(label="Average F1-Score (macro)", value=f"{mean_metrics['macro_f1']:.4f}", delta=f"{std_metrics['macro_f1']:.4f}")
 
                         # Create tabs for different plots
