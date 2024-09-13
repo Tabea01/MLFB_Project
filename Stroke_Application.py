@@ -94,7 +94,7 @@ def main():
                 # Show Missing Values
                 if st.checkbox('Show Missing Values'):
                     missing_values = df.isna().sum()
-                    st.write(missing_values[missing_values > 0])  # Only display columns with missing values
+                    st.write(missing_values[missing_values > 0])
 
                 # Show Data Info
                 if st.checkbox('Show Data Info'):
@@ -117,8 +117,8 @@ def main():
                 if st.checkbox('Show Pairplot (Numeric Data)'):
                     if len(numeric_cols) > 1:
                         pairplot_fig = sns.pairplot(df[numeric_cols])
-                        st.pyplot(pairplot_fig)  # Display the pairplot
-                        buf = plot_to_bytes(pairplot_fig)  # Correct variable
+                        st.pyplot(pairplot_fig)  
+                        buf = plot_to_bytes(pairplot_fig) 
                         st.download_button(
                             label="⬇️ Download Pairplot",
                             data=buf,
@@ -134,8 +134,8 @@ def main():
                     if len(numeric_cols) > 1:
                         fig, ax = plt.subplots(figsize=(6, 5))
                         sns.heatmap(df[numeric_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f', ax=ax)
-                        st.pyplot(fig)  # Pass the figure to st.pyplot()
-                        buf = plot_to_bytes(fig)  # Correct variable
+                        st.pyplot(fig)  
+                        buf = plot_to_bytes(fig) 
                         st.download_button(
                             label="⬇️ Download Correlation Heatmap",
                             data=buf,
@@ -151,10 +151,10 @@ def main():
                     if len(categorical_cols) > 0:
                         num_plots = len(categorical_cols)
                         cols = 2
-                        rows = (num_plots + 1) // cols  # Calculate the number of rows needed
+                        rows = (num_plots + 1) // cols  
 
                         fig, axes = plt.subplots(rows, cols, figsize=(12, 4 * rows))
-                        axes = axes.flatten()  # Flatten the axes array to iterate easily
+                        axes = axes.flatten()  
 
                         for i, col in enumerate(categorical_cols):
                             sns.countplot(data=df, x=col, ax=axes[i], palette="Set2")
@@ -167,14 +167,14 @@ def main():
                                             ha='center', va='bottom')
 
                             max_height = df[col].value_counts().max()
-                            axes[i].set_ylim(0, max_height * 1.1)  # Extend y-axis limit by 10%
+                            axes[i].set_ylim(0, max_height * 1.1)  
 
                         for i in range(num_plots, rows * cols):
                             fig.delaxes(axes[i])
 
-                        plt.subplots_adjust(hspace=0.8, wspace=0.3)  # Adjust spacing between plots
-                        st.pyplot(fig)  # Display the countplots
-                        buf = plot_to_bytes(fig)  # Correct variable
+                        plt.subplots_adjust(hspace=0.8, wspace=0.3)  
+                        st.pyplot(fig)  
+                        buf = plot_to_bytes(fig) 
                         st.download_button(
                             label="⬇️ Download Count Plots of Categorical Columns",
                             data=buf,
@@ -205,8 +205,8 @@ def main():
                             fig_hist.delaxes(axes_hist[i])
 
                         plt.subplots_adjust(hspace=0.8, wspace=0.3)
-                        st.pyplot(fig_hist)  # Display the histograms
-                        buf_hist = plot_to_bytes(fig_hist)  # Correct variable
+                        st.pyplot(fig_hist)  
+                        buf_hist = plot_to_bytes(fig_hist)  
                         st.download_button(
                             label="⬇️ Download Histograms of Numerical Columns",
                             data=buf_hist,
@@ -753,8 +753,6 @@ def main():
                                 )
                     
                     elif model_type == 'Regression':
-
-                        # Section Header with an icon for visual appeal
                         st.markdown("## 📊 Results for Regression")
 
                         y_pred = model.predict(X_test)
@@ -881,7 +879,7 @@ def main():
                         mean_metrics = {key: np.mean(val) for key, val in st.session_state.kf_scores.items()}
                         std_metrics = {key: np.std(val) for key, val in st.session_state.kf_scores.items()}
 
-                        # Organizing metrics into columns for better layout
+                        # Organizing metrics into columns
                         col1, col2, col3 = st.columns(3)
                         with col1:
                             st.metric(label="Average R2", value=f"{mean_metrics['r2']:.4f}", delta=f"{std_metrics['r2']:.4f}")
